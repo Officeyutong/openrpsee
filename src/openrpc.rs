@@ -93,6 +93,28 @@ impl Generator {
         }
     }
 
+    /// Constructs the descriptor for a JSON-RPC method's result type.
+    ///
+    /// Unlike [`result`](Self::result), this method does not require `T` to implement
+    /// `Documented`, accepting a description parameter directly instead.
+    pub fn result_schema<T: JsonSchema>(
+        &mut self,
+        name: &'static str,
+        description: &'static str,
+    ) -> ContentDescriptor {
+        ContentDescriptor {
+            name,
+            summary: description
+                .split_once('\n')
+                .map(|(summary, _)| summary)
+                .unwrap_or(description),
+            description,
+            required: false,
+            schema: self.inner.subschema_for::<T>(),
+            deprecated: false,
+        }
+    }
+
     /// Consumes the generator and produces the OpenRPC components.
     pub fn into_components(mut self) -> Components {
         Components {
