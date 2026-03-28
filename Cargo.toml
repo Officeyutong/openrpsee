@@ -3,6 +3,8 @@ name = "openrpsee"
 version = "0.1.0"
 edition = "2024"
 description = "Library for building OpenRPC documents"
+repository = "https://github.com/zcash/openrpsee"
+license = "MIT OR Apache-2.0"
 
 [dependencies]
 
