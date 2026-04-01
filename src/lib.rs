@@ -210,10 +210,14 @@ pub static METHODS: ::phf::Map<&str, openrpsee::openrpc::RpcMethod> = ::phf::phf
                 }
                 contents.push_str("    ],\n");
 
-                contents.push_str("    result: |g| g.result::<openrpsee::openrpc");
-                contents.push_str("::ResultType>(\"");
+                let result_ty = result_type
+                    .as_deref()
+                    .unwrap_or("()");
+                contents.push_str("    result: |g| g.result_schema::<");
+                contents.push_str(result_ty);
+                contents.push_str(">(\"");
                 contents.push_str(&command);
-                contents.push_str("_result\"),\n");
+                contents.push_str("_result\", \"\"),\n");
 
                 contents.push_str("    deprecated: ");
                 contents.push_str(
